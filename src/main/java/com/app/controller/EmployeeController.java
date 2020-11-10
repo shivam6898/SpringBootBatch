@@ -31,10 +31,18 @@ public class EmployeeController {
 
 	//insert in batch
 	@PostMapping("insertinbatch")
-	public String inserEmpInBatch() {
-		return employeeService.insertEmployeeInBatch();
+	public ResponseEntity<?>  inserEmpInBatch() {
+		ResponseEntity<?> resp =null;
+		List<Employee> list= employeeService.insertEmployeeInBatch();
+		if(list==null && list.isEmpty() ) {
+			String msg="NO DATA FOUND";
+			resp=new ResponseEntity<String>(msg,HttpStatus.NO_CONTENT);
+		}else {
+			resp=new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
+		}
+
+		return resp;
 	}
-	
 	
 	@GetMapping("/getall")
 	public ResponseEntity<?>  getAllEmployees(){

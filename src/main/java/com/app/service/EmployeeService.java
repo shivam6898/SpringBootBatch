@@ -26,7 +26,7 @@ public class EmployeeService {
 
 
 	@Transactional
-	public String insertEmployeeInBatch() {
+	public List<Employee> insertEmployeeInBatch() {
 		List<Employee> empList=new ArrayList<Employee>();
 		for (int i = 1; i <=50; i++) {
 			Employee emp=new Employee();
@@ -34,8 +34,11 @@ public class EmployeeService {
 			emp.setEmpSal(50+i);
 			empList.add(emp);
 		}
-		employeeRepository.saveAll(empList);
-		return "Employees saved with batch";
+		long start = System.currentTimeMillis();
+		List<Employee> insertedList=employeeRepository.saveAll(empList);
+		long end = System.currentTimeMillis();
+		System.out.println("Time taken by InsertInBatch--" + (int) (end - start));
+		return insertedList;
 	}
 
 	@Transactional
