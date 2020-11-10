@@ -9,7 +9,6 @@ public class SpringBootBatchApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootBatchApplication.class, args);
 		System.out.println("Application up...");
-		
 	}
 	
 	

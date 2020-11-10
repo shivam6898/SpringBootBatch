@@ -44,6 +44,7 @@ public class EmployeeController {
 		return resp;
 	}
 	
+	//get all employees in batch
 	@GetMapping("/getall")
 	public ResponseEntity<?>  getAllEmployees(){
 		ResponseEntity<?> resp =null;
@@ -58,25 +59,8 @@ public class EmployeeController {
 		return resp;
 	}
 
-	//get in batch
 	
-	/*
-	 * @GetMapping("findallemployees") public List<Employee> getAllPeople() { return
-	 * employeeService.findAllEmployees(); }
-	 */
-	 
-
-	//insert in batch
-	/*
-	 * @PostMapping("bulkinsert") public String addPeople(@RequestBody
-	 * List<Employee> employee) { if(employee != null && !employee.isEmpty()) {
-	 * employeeService.insertAll(employee); return "employees saved"; } else {
-	 * return "NO_DATA_IN_REQUEST"; } }
-	 */
-
-
-	
-
+	//update in batch
 	@PutMapping("update")
 	public String updatePeople(@RequestBody List<Employee> employee) {
 		if (employee != null) {
@@ -87,17 +71,13 @@ public class EmployeeController {
 		}
 	}
 
+	
+	//delete in batch
 	@DeleteMapping("/deleteinbatch")
 	public String deleteInBatch(@RequestBody List<Employee> empList) {
 		employeeService.deleteInBatch(empList);
 		return "employee deleted successfully";
 	}
 
-	/*
-	 * //update employee data
-	 * 
-	 * @PutMapping("/updateemployee") public String updateEmployee(@RequestBody
-	 * List<Employee> empList){ return employeeService.updateEmployees(empList) ; }
-	 */
 
 }
