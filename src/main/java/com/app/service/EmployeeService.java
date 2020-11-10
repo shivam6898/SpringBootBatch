@@ -15,7 +15,7 @@ import com.app.repository.EmployeeRepo;
 public class EmployeeService {
 
 	@Autowired
-	private EmployeeRepo employeeRepo;
+	private EmployeeRepo employeeRepository;
 
 	/*
 	 * @Transactional public String insertEmployee() { for (int i = 1; i <=50; i++)
@@ -34,7 +34,7 @@ public class EmployeeService {
 			emp.setEmpSal(50+i);
 			empList.add(emp);
 		}
-		employeeRepo.saveAll(empList);
+		employeeRepository.saveAll(empList);
 		return "Employees saved with batch";
 	}
 
@@ -43,13 +43,22 @@ public class EmployeeService {
 		for (Employee emp : employee) {
 			emp.setEmpName(emp.getEmpName()+"updated");
 		}
-		employeeRepo.saveAll(employee);
+		employeeRepository.saveAll(employee);
 	}
 
 
 	public List<Employee> getAllEmployees() {
-		return employeeRepo.findAll();
-	}	 
+		return employeeRepository.findAll();
+	}	
+	
+	
+	@Transactional
+	public void deleteInBatch(List<Employee> empList) {
+		long start = System.currentTimeMillis();
+		employeeRepository.deleteInBatch(empList);
+		long end = System.currentTimeMillis();
+		System.out.println("Time taken by deleteInBatch--" + (int) (end - start));
+	}
 
 	/*
 	 * @Transactional public List<Employee> insertAll(List<Employee> empList) {
