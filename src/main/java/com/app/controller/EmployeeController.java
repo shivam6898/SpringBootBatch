@@ -82,7 +82,7 @@ public class EmployeeController {
 	@DeleteMapping("/deleteinbatch")
 	public String deleteInBatch(@RequestBody List<Employee> empList) {
 		employeeService.deleteInBatch(empList);
-		return "Student deleted successfully";
+		return "employee deleted successfully";
 	}
 
 	/*
