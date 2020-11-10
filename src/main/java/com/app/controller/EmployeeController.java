@@ -62,21 +62,25 @@ public class EmployeeController {
 	
 	//update in batch
 	@PutMapping("update")
-	public String updatePeople(@RequestBody List<Employee> employee) {
-		if (employee != null) {
-			employeeService.updateAll(employee);
-			return "Updated employees.";
-		} else {
-			return "REQUEST_NO_BODY";
+	public ResponseEntity<?> updateEmployee(@RequestBody List<Employee> employee) {
+		ResponseEntity<?> resp =null;
+		List<Employee> list=employeeService.updateAll(employee);
+		if(list==null && list.isEmpty() ) {
+			String msg="NO DATA FOUND";
+			resp=new ResponseEntity<String>(msg,HttpStatus.NO_CONTENT);
+		}else {
+			resp=new ResponseEntity<List<Employee>>(list, HttpStatus.OK);
 		}
+		return resp;
 	}
 
 	
 	//delete in batch
 	@DeleteMapping("/deleteinbatch")
-	public String deleteInBatch(@RequestBody List<Employee> empList) {
+	public ResponseEntity<String> deleteInBatch(@RequestBody List<Employee> empList) {
+		ResponseEntity<String> resp=null;
 		employeeService.deleteInBatch(empList);
-		return "employee deleted successfully";
+		return resp=new ResponseEntity<String>("deleted given data in bulk",HttpStatus.OK);
 	}
 
 

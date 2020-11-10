@@ -42,11 +42,11 @@ public class EmployeeService {
 	}
 
 	@Transactional
-	public void updateAll(List<Employee> employee) {
+	public List<Employee> updateAll(List<Employee> employee) {
 		for (Employee emp : employee) {
 			emp.setEmpName(emp.getEmpName()+"updated");
 		}
-		employeeRepository.saveAll(employee);
+		return employeeRepository.saveAll(employee);
 	}
 
 
@@ -63,10 +63,6 @@ public class EmployeeService {
 		System.out.println("Time taken by deleteInBatch--" + (int) (end - start));
 	}
 
-	/*
-	 * @Transactional public List<Employee> insertAll(List<Employee> empList) {
-	 * return (List<Employee>)employeeRepo.saveAll(empList); }
-	 */
 
 
 	/*
