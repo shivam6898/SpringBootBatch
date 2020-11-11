@@ -1,10 +1,11 @@
 package com.app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.Logger;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,29 +24,22 @@ public class EmployeeService {
 	 * employee.setEmpSal(i+0.5); employeeRepo.save(employee) ; } return
 	 * "All Employees saved one by one"; }
 	 */
-
-
+	
+	
+	
 	@Transactional
-	public List<Employee> insertEmployeeInBatch() {
-		List<Employee> empList=new ArrayList<Employee>();
-		for (int i = 1; i <=50; i++) {
-			Employee emp=new Employee();
-			emp.setEmpName("InBatch"+i);
-			emp.setEmpSal(50+i);
-			empList.add(emp);
-		}
+	public List<Employee> insertEmployeeInBatch(List<Employee> empList) {
 		long start = System.currentTimeMillis();
-		List<Employee> insertedList=employeeRepository.saveAll(empList);
-		long end = System.currentTimeMillis();
-		System.out.println("Time taken by InsertInBatch--" + (int) (end - start));
+		List<Employee> insertedList = employeeRepository.saveAll(empList);
+		System.out.println("Time taken by InsertInBatch--" +  (System.currentTimeMillis() - start));
 		return insertedList;
 	}
+	 
+	
+	
 
 	@Transactional
 	public List<Employee> updateAll(List<Employee> employee) {
-		for (Employee emp : employee) {
-			emp.setEmpName(emp.getEmpName()+"updated");
-		}
 		return employeeRepository.saveAll(employee);
 	}
 

@@ -2,6 +2,8 @@ package com.app.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import com.app.service.EmployeeService;
 @RestController
 @RequestMapping("/emp")
 public class EmployeeController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeService employeeService;
@@ -31,10 +34,12 @@ public class EmployeeController {
 
 	//insert in batch
 	@PostMapping("insertinbatch")
-	public ResponseEntity<?>  inserEmpInBatch() {
+	public ResponseEntity<?>  inserEmpInBatch(@RequestBody List<Employee> empList) {
 		ResponseEntity<?> resp =null;
-		List<Employee> list= employeeService.insertEmployeeInBatch();
-		if(list==null && list.isEmpty() ) {
+		List<Employee> list= employeeService.insertEmployeeInBatch(empList);
+	//	log.info("employee_inserted {}",list);
+		//log.info("info- {}",list);  
+		if(list==null && list.isEmpty()) {
 			String msg="NO DATA FOUND";
 			resp=new ResponseEntity<String>(msg,HttpStatus.NO_CONTENT);
 		}else {
@@ -78,9 +83,8 @@ public class EmployeeController {
 	//delete in batch
 	@DeleteMapping("/deleteinbatch")
 	public ResponseEntity<String> deleteInBatch(@RequestBody List<Employee> empList) {
-		ResponseEntity<String> resp=null;
 		employeeService.deleteInBatch(empList);
-		return resp=new ResponseEntity<String>("deleted given data in bulk",HttpStatus.OK);
+		return new ResponseEntity<String>("deleted given data in bulk",HttpStatus.OK);
 	}
 
 
